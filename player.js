@@ -33,14 +33,14 @@ var Player = function(canv, solid)
     canv.context.strokeStyle = "#000000";
     if(solid)
     {
-      canv.context.fillRect(offsetx+this.x-5,canv.canvas.height-(offsety+this.y+10),10,10);
+      canv.context.fillRect(offsetx+this.x-5,canv.canvas.height-(offsety+this.y+40),40,40);
       canv.context.fillRect(canv.canvas.width-15,canv.canvas.height-15,10,10);
       canv.context.textAlign = "right";
       canv.context.fillText(this.score,canv.canvas.width-25,canv.canvas.height-5);
     }
     else
     {
-      canv.context.strokeRect(offsetx+this.x-5,canv.canvas.height-(offsety+this.y+10),10,10);
+      canv.context.strokeRect(offsetx+this.x-5,canv.canvas.height-(offsety+this.y+40),40,40);
       canv.context.strokeRect(5,canv.canvas.height-15,10,10);
       canv.context.textAlign = "left";
       canv.context.fillText(this.score,25,canv.canvas.height-5);
@@ -49,9 +49,9 @@ var Player = function(canv, solid)
 
   this.move = function(x, jump, dodge)
   {
-    this.xvel += x*0.3;
-    if(this.xvel > 5)  this.xvel = this.xvel-((this.xvel-5)/8);
-    if(this.xvel < -5) this.xvel = this.xvel-((this.xvel+5)/8);
+    this.xvel += x*0.1;
+    if(this.xvel > 2)  this.xvel = this.xvel-((this.xvel-2)/4);
+    if(this.xvel < -2) this.xvel = this.xvel-((this.xvel+2)/4);
 
     if(x == 0)
     {
@@ -77,7 +77,7 @@ var Player = function(canv, solid)
       {
         jumps[jumpsi].play();
         jumpsi = (jumpsi+1)%10;
-        this.yvel = 10;
+        this.yvel = 5;
       }
       else if(this.sprint)
       {
@@ -87,11 +87,11 @@ var Player = function(canv, solid)
         dx = this.opponent.x-this.x;
         dy = this.opponent.y-this.y;
         dl = Math.sqrt((dx*dx)+(dy*dy));
-          this.xvel = dx/dl*40;
+          this.xvel = dx/dl*10;
         if(this.opponent.y > this.y)
-          this.yvel = dy/dl*10;
+          this.yvel = dy/dl*2;
         else
-          this.yvel = dy/dl*40;
+          this.yvel = dy/dl*10;
       }
     }
     if(this.sprint && dodge)
@@ -104,23 +104,23 @@ var Player = function(canv, solid)
         dx = this.opponent.x-this.x;
         dy = this.opponent.y-this.y;
         dl = Math.sqrt((dx*dx)+(dy*dy));
-        this.xvel = dx/dl*-12;
-        this.yvel = dy/dl*-12;
+        this.xvel = dx/dl*-6;
+        this.yvel = dy/dl*-6;
       }
       else if(this.x > this.opponent.x)
-        this.xvel = 40;
+        this.xvel = 20;
       else if(this.x < this.opponent.x)
-        this.xvel = -40;
+        this.xvel = -20;
     }
 
-    if(this.x > canv.canvas.width-5)
+    if(this.x > canv.canvas.width-2)
     {
-      this.x = canv.canvas.width-5;
+      this.x = canv.canvas.width-2;
       if(this.xvel > 0) this.xvel *= -1;
     }
-    else if(this.x < 5)
+    else if(this.x < 2)
     {
-      this.x = 5;
+      this.x = 2;
       if(this.xvel < 0) this.xvel *= -1;
     }
   };
